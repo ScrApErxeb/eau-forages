@@ -9,6 +9,7 @@ class Intervention(Base):
     id = Column(Integer, primary_key=True, index=True)
     description = Column(Text, nullable=False)
     date = Column(DateTime, default=datetime.utcnow)
+    date_crea = Column(DateTime, default=datetime.utcnow)
 
     technicien_id = Column(Integer, ForeignKey("techniciens.id"), nullable=False)
     client_id = Column(Integer, ForeignKey("clients.id"), nullable=True)
@@ -17,3 +18,6 @@ class Intervention(Base):
     technicien = relationship("Technicien", back_populates="interventions")
     client = relationship("Client", back_populates="interventions")
     ligne = relationship("Ligne", back_populates="interventions")
+
+    def __repr__(self):
+        return f"<Intervention(id={self.id}, technicien_id={self.technicien_id}, client_id={self.client_id})>"

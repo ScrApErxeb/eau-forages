@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.db import Base
@@ -7,11 +7,13 @@ class Site(Base):
     __tablename__ = "sites"
 
     id = Column(Integer, primary_key=True, index=True)
-    nom = Column(String, nullable=False)
+    nom = Column(String, nullable=False, unique=True)  # nom unique
     localisation = Column(String)
-    actif = Column(Integer, default=1)
+    actif = Column(Boolean, default=True)
     date_crea = Column(DateTime, default=datetime.utcnow)
 
-    # Un site peut avoir plusieurs compteurs et bornes
-    compteurs = relationship("Compteur", back_populates="site")
-    bornes = relationship("Borne", back_populates="site")  # <- vérifie que Borne a 'site'
+    compteurs = relationship("Compteur", back_populates="site", cascade="all, delete-orphan")
+    bornes = relationship("Borne", back_populates="site", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"<Site(id={self.id}, nom='{self.nom}')>"
