@@ -3,17 +3,16 @@ from datetime import datetime
 
 class InterventionBase(BaseModel):
     description: str
-    date: datetime
     technicien_id: int
-    ligne_id: int
+    client_id: int | None = None
+    ligne_id: int | None = None
 
 class InterventionCreate(InterventionBase):
     pass
 
 class InterventionOut(InterventionBase):
     id: int
+    date: datetime
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True

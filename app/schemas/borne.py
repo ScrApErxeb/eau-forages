@@ -1,14 +1,11 @@
-# app/schemas/borne.py
 from pydantic import BaseModel
 from datetime import datetime
 
-# Input
 class BorneCreate(BaseModel):
     site_id: int
     code: str
     description: str | None = None
 
-# Output
 class BorneOut(BaseModel):
     id: int
     site_id: int
@@ -17,7 +14,5 @@ class BorneOut(BaseModel):
     actif: int
     date_pose: datetime
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True

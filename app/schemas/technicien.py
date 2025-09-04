@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 class TechnicienBase(BaseModel):
     nom: str
+    prenom: str | None = None
     specialite: str | None = None
 
 class TechnicienCreate(TechnicienBase):
@@ -10,7 +11,5 @@ class TechnicienCreate(TechnicienBase):
 class TechnicienOut(TechnicienBase):
     id: int
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True

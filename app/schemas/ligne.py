@@ -10,7 +10,5 @@ class LigneCreate(LigneBase):
 class LigneOut(LigneBase):
     id: int
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True

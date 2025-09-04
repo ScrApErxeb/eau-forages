@@ -1,4 +1,3 @@
-# app/schemas/compteur.py
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -19,7 +18,5 @@ class CompteurOut(BaseModel):
     date_pose: datetime
     actif: int
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True

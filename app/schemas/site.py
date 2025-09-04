@@ -1,13 +1,10 @@
-# app/schemas/site.py
 from pydantic import BaseModel
 from datetime import datetime
 
-# Input
 class SiteCreate(BaseModel):
     nom: str
     localisation: str | None = None
 
-# Output
 class SiteOut(BaseModel):
     id: int
     nom: str
@@ -15,7 +12,5 @@ class SiteOut(BaseModel):
     actif: int
     date_crea: datetime
 
-    model_config = {
-    "from_attributes": True
-}
-
+    class Config:
+        from_attributes = True
