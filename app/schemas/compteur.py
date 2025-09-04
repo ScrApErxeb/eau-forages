@@ -19,5 +19,7 @@ class CompteurOut(BaseModel):
     date_pose: datetime
     actif: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+    "from_attributes": True
+}
+

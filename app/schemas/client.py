@@ -18,5 +18,7 @@ class ClientOut(BaseModel):
     actif: int
     date_crea: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {
+    "from_attributes": True
+}
+

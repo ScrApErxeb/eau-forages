@@ -17,5 +17,7 @@ class BorneOut(BaseModel):
     actif: int
     date_pose: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {
+    "from_attributes": True
+}
+

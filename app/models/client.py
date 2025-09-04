@@ -16,4 +16,5 @@ class Client(Base):
     date_crea = Column(DateTime, default=datetime.utcnow)
 
     # Relation avec Compteur
+    interventions = relationship("Intervention", back_populates="client")
     compteurs = relationship("Compteur", back_populates="client", cascade="all, delete-orphan")
