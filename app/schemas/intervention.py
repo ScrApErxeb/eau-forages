@@ -10,9 +10,16 @@ class InterventionBase(BaseModel):
 class InterventionCreate(InterventionBase):
     pass
 
+class InterventionUpdate(BaseModel):
+    description: str | None = None
+    technicien_id: int | None = None
+    client_id: int | None = None
+    ligne_id: int | None = None
+
 class InterventionOut(InterventionBase):
     id: int
     date: datetime
+    date_crea: datetime
 
     class Config:
         from_attributes = True

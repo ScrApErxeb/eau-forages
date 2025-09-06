@@ -1,19 +1,24 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class ClientCreate(BaseModel):
+class ClientBase(BaseModel):
     nom: str
     prenom: str
     num_cnib: str
     tel: str | None = None
 
-class ClientOut(BaseModel):
+class ClientCreate(ClientBase):
+    pass
+
+class ClientUpdate(BaseModel):
+    nom: str | None = None
+    prenom: str | None = None
+    num_cnib: str | None = None
+    tel: str | None = None
+
+class ClientOut(ClientBase):
     id: int
-    nom: str
-    prenom: str
-    num_cnib: str
-    tel: str | None
-    actif: int
+    actif: bool
     date_crea: datetime
 
     class Config:

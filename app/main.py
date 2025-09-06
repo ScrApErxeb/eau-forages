@@ -7,6 +7,7 @@ from app.routers import (
     techniciens,
     lignes,
     interventions,
+    users,
 )
 
 app = FastAPI(
@@ -23,7 +24,7 @@ app.include_router(compteurs.router, prefix="/compteurs", tags=["Compteurs"])
 app.include_router(techniciens.router, prefix="/techniciens", tags=["Techniciens"])
 app.include_router(lignes.router, prefix="/lignes", tags=["Lignes"])
 app.include_router(interventions.router, prefix="/interventions", tags=["Interventions"])
-
+app.include_router(users.router, prefix="/users", tags=["Users"])
 # Route racine
 @app.get("/", tags=["Root"])
 def root():

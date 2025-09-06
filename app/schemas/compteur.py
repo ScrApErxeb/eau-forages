@@ -1,22 +1,28 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class CompteurCreate(BaseModel):
+class CompteurBase(BaseModel):
     client_id: int
     site_id: int
     serie: str
     calibre: str | None = None
     index_initial: float = 0.0
 
-class CompteurOut(BaseModel):
+class CompteurCreate(CompteurBase):
+    pass
+
+class CompteurUpdate(BaseModel):
+    client_id: int | None = None
+    site_id: int | None = None
+    serie: str | None = None
+    calibre: str | None = None
+    index_initial: float | None = None
+
+class CompteurOut(CompteurBase):
     id: int
-    client_id: int
-    site_id: int
-    serie: str
-    calibre: str | None
-    index_initial: float
+    actif: bool
     date_pose: datetime
-    actif: int
+    date_crea: datetime
 
     class Config:
         from_attributes = True

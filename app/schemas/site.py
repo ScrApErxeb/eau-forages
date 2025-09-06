@@ -1,15 +1,20 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class SiteCreate(BaseModel):
+class SiteBase(BaseModel):
     nom: str
     localisation: str | None = None
 
-class SiteOut(BaseModel):
+class SiteCreate(SiteBase):
+    pass
+
+class SiteUpdate(BaseModel):
+    nom: str | None = None
+    localisation: str | None = None
+
+class SiteOut(SiteBase):
     id: int
-    nom: str
-    localisation: str | None
-    actif: int
+    actif: bool
     date_crea: datetime
 
     class Config:

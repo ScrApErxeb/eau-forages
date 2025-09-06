@@ -8,6 +8,11 @@ class TechnicienBase(BaseModel):
 class TechnicienCreate(TechnicienBase):
     pass
 
+class TechnicienUpdate(BaseModel):
+    nom: str | None = None
+    prenom: str | None = None
+    specialite: str | None = None
+
 class TechnicienOut(TechnicienBase):
     id: int
 

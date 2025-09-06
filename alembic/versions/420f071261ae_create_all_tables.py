@@ -1,8 +1,8 @@
-"""Initial migration
+"""create all tables
 
-Revision ID: ce09f344d88b
+Revision ID: 420f071261ae
 Revises: 
-Create Date: 2025-09-02 18:20:38.453182
+Create Date: 2025-09-04 12:05:44.436253
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ce09f344d88b'
+revision: str = '420f071261ae'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,7 +26,7 @@ def upgrade() -> None:
     sa.Column('prenom', sa.String(), nullable=False),
     sa.Column('num_cnib', sa.String(), nullable=False),
     sa.Column('tel', sa.String(), nullable=True),
-    sa.Column('actif', sa.Integer(), nullable=True),
+    sa.Column('actif', sa.Boolean(), nullable=True),
     sa.Column('date_crea', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -37,16 +37,20 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nom', sa.String(), nullable=False),
     sa.Column('localisation', sa.String(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('actif', sa.Boolean(), nullable=True),
+    sa.Column('date_crea', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('nom')
     )
     op.create_index(op.f('ix_lignes_id'), 'lignes', ['id'], unique=False)
     op.create_table('sites',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('nom', sa.String(), nullable=False),
     sa.Column('localisation', sa.String(), nullable=True),
-    sa.Column('actif', sa.Integer(), nullable=True),
+    sa.Column('actif', sa.Boolean(), nullable=True),
     sa.Column('date_crea', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('nom')
     )
     op.create_index(op.f('ix_sites_id'), 'sites', ['id'], unique=False)
     op.create_table('techniciens',
@@ -54,6 +58,8 @@ def upgrade() -> None:
     sa.Column('nom', sa.String(), nullable=False),
     sa.Column('prenom', sa.String(), nullable=True),
     sa.Column('specialite', sa.String(), nullable=True),
+    sa.Column('actif', sa.Boolean(), nullable=True),
+    sa.Column('date_crea', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_techniciens_id'), 'techniciens', ['id'], unique=False)
@@ -63,10 +69,11 @@ def upgrade() -> None:
     sa.Column('code', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('date_crea', sa.DateTime(), nullable=True),
-    sa.Column('actif', sa.Integer(), nullable=True),
+    sa.Column('actif', sa.Boolean(), nullable=True),
     sa.Column('date_pose', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['site_id'], ['sites.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('code')
     )
     op.create_index(op.f('ix_bornes_id'), 'bornes', ['id'], unique=False)
     op.create_table('compteurs',
@@ -76,17 +83,20 @@ def upgrade() -> None:
     sa.Column('serie', sa.String(), nullable=False),
     sa.Column('calibre', sa.String(), nullable=True),
     sa.Column('index_initial', sa.Float(), nullable=True),
-    sa.Column('actif', sa.Integer(), nullable=True),
+    sa.Column('actif', sa.Boolean(), nullable=True),
     sa.Column('date_pose', sa.DateTime(), nullable=True),
+    sa.Column('date_crea', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['client_id'], ['clients.id'], ),
     sa.ForeignKeyConstraint(['site_id'], ['sites.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('serie')
     )
     op.create_index(op.f('ix_compteurs_id'), 'compteurs', ['id'], unique=False)
     op.create_table('interventions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.Text(), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=True),
+    sa.Column('date_crea', sa.DateTime(), nullable=True),
     sa.Column('technicien_id', sa.Integer(), nullable=False),
     sa.Column('client_id', sa.Integer(), nullable=True),
     sa.Column('ligne_id', sa.Integer(), nullable=True),

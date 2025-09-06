@@ -7,6 +7,10 @@ class LigneBase(BaseModel):
 class LigneCreate(LigneBase):
     pass
 
+class LigneUpdate(BaseModel):
+    nom: str | None = None
+    localisation: str | None = None
+
 class LigneOut(LigneBase):
     id: int
 
