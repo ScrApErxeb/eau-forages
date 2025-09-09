@@ -1,18 +1,25 @@
 # app/routers/bornes.py
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from app.db import get_db
 from app.models.borne import Borne
 from app.schemas.borne import BorneCreate, BorneOut
-from app.utils.db_utils import get_or_404, check_unique
+from app.utils.db_utils import get_or_404
 from app.utils.pagination import paginate
 
 router = APIRouter(prefix="/bornes", tags=["bornes"])
 
 @router.post("/", response_model=BorneOut, status_code=status.HTTP_201_CREATED)
 def create_borne(borne_data: BorneCreate, db: Session = Depends(get_db)):
-    check_unique(db, Borne, "code", borne_data.code)
+    # Vérification unicité code par site
+    exists = db.query(Borne).filter(
+        Borne.code == borne_data.code,
+        Borne.site_id == borne_data.site_id
+    ).first()
+    if exists:
+        raise HTTPException(status_code=400, detail="Code déjà utilisé pour ce site")
+
     db_borne = Borne(**borne_data.dict())
     db.add(db_borne)
     db.commit()
@@ -30,8 +37,17 @@ def get_borne(borne_id: int, db: Session = Depends(get_db)):
 @router.put("/{borne_id}", response_model=BorneOut)
 def update_borne(borne_id: int, borne_data: BorneCreate, db: Session = Depends(get_db)):
     borne = get_or_404(db, Borne, borne_id, "Borne non trouvée")
-    if borne.code != borne_data.code:
-        check_unique(db, Borne, "code", borne_data.code, exclude_id=borne_id)
+
+    # Vérification unicité code par site si code ou site_id changent
+    if borne.code != borne_data.code or borne.site_id != borne_data.site_id:
+        exists = db.query(Borne).filter(
+            Borne.code == borne_data.code,
+            Borne.site_id == borne_data.site_id,
+            Borne.id != borne_id
+        ).first()
+        if exists:
+            raise HTTPException(status_code=400, detail="Code déjà utilisé pour ce site")
+
     for field, value in borne_data.dict(exclude_unset=True).items():
         setattr(borne, field, value)
     db.commit()
