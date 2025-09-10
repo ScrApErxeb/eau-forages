@@ -1,0 +1,32 @@
+.consommation-list-container {
+  overflow-x: auto;
+}
+
+.consommation-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.consommation-table th,
+.consommation-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.consommation-table th { background-color: #f2f2f2; }
+.consommation-table tr:hover { background-color: #f9f9f9; }
+
+.consommation-table button {
+  padding: 0.2rem 0.5rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #f44336;
+  color: white;
+}
+
+.consommation-table button:hover {
+  background-color: #da190b;
+}

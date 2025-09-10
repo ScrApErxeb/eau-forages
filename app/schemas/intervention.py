@@ -4,7 +4,7 @@ from datetime import datetime
 class InterventionBase(BaseModel):
     description: str
     technicien_id: int
-    client_id: int | None = None
+    abonne_id: int | None = None
     ligne_id: int | None = None
 
 class InterventionCreate(InterventionBase):
@@ -13,7 +13,7 @@ class InterventionCreate(InterventionBase):
 class InterventionUpdate(BaseModel):
     description: str | None = None
     technicien_id: int | None = None
-    client_id: int | None = None
+    abonne_id: int | None = None
     ligne_id: int | None = None
 
 class InterventionOut(InterventionBase):

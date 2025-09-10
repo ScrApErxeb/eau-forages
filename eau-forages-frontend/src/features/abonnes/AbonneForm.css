@@ -1,0 +1,31 @@
+.abonne-form {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux inputs de passer à la ligne */
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.abonne-form input {
+  flex: 1 1 150px; /* Croissance et largeur minimale */
+  min-width: 100px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.abonne-form button {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.abonne-form button:hover {
+  background-color: #45a049;
+}
+
+.abonne-form span {
+  margin-left: 1rem;
+}

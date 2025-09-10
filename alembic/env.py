@@ -4,7 +4,7 @@ from alembic import context
 
 # Importer ton Base et l'engine
 from app.db import Base, engine
-from app.models import client, site, borne, compteur, technicien, ligne, intervention, user
+from app.models import abonne,consommation, site, borne, technicien, ligne, intervention, user
 
 config = context.config
 if config.config_file_name is not None:

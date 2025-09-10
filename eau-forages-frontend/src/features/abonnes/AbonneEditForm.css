@@ -1,0 +1,39 @@
+.abonne-edit-form {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux inputs de passer à la ligne */
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.abonne-edit-form input {
+  flex: 1 1 150px;
+  min-width: 100px;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.abonne-edit-form button {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.abonne-edit-form button[type="submit"] {
+  background-color: #2196f3;
+  color: white;
+}
+
+.abonne-edit-form button[type="submit"]:hover {
+  background-color: #0b7dda;
+}
+
+.abonne-edit-form button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+
+.abonne-edit-form button[type="button"]:hover {
+  background-color: #da190b;
+}

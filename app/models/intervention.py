@@ -12,12 +12,12 @@ class Intervention(Base):
     date_crea = Column(DateTime, default=datetime.utcnow)
 
     technicien_id = Column(Integer, ForeignKey("techniciens.id"), nullable=False)
-    client_id = Column(Integer, ForeignKey("clients.id"), nullable=True)
+    abonne_id = Column(Integer, ForeignKey("abonnes.id"), nullable=True)  # changement ici
     ligne_id = Column(Integer, ForeignKey("lignes.id"), nullable=True)
 
     technicien = relationship("Technicien", back_populates="interventions")
-    client = relationship("Client", back_populates="interventions")
+    abonne = relationship("Abonne", back_populates="interventions")  # changement ici
     ligne = relationship("Ligne", back_populates="interventions")
 
     def __repr__(self):
-        return f"<Intervention(id={self.id}, technicien_id={self.technicien_id}, client_id={self.client_id})>"
+        return f"<Intervention(id={self.id}, technicien_id={self.technicien_id}, abonne_id={self.abonne_id})>"

@@ -12,7 +12,6 @@ class Site(Base):
     actif = Column(Boolean, default=True)
     date_crea = Column(DateTime, default=datetime.utcnow)
 
-    compteurs = relationship("Compteur", back_populates="site", cascade="all, delete-orphan")
     bornes = relationship("Borne", back_populates="site", cascade="all, delete-orphan")
 
     def __repr__(self):

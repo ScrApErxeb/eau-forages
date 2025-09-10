@@ -1,14 +1,14 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app.models.compteur import Compteur
-from app.models.client import Client
+from app.models.abonne import Abonne
 
 class CompteurService:
     @staticmethod
     def create_compteur(db: Session, compteur_data):
-        client = db.query(Client).filter(Client.id == compteur_data.client_id).first()
-        if not client:
-            raise HTTPException(status_code=404, detail="Client non trouvé")
+        abonne = db.query(Abonne).filter(Abonne.id == compteur_data.abonne_id).first()
+        if not abonne:
+            raise HTTPException(status_code=404, detail="Abonne non trouvé")
         db_compteur = Compteur(**compteur_data.dict())
         db.add(db_compteur)
         db.commit()
@@ -21,10 +21,10 @@ class CompteurService:
         if not compteur:
             raise HTTPException(status_code=404, detail="Compteur non trouvé")
 
-        if compteur_data.client_id and compteur_data.client_id != compteur.client_id:
-            client = db.query(Client).filter(Client.id == compteur_data.client_id).first()
-            if not client:
-                raise HTTPException(status_code=404, detail="Client non trouvé")
+        if compteur_data.abonne_id and compteur_data.abonne_id != compteur.abonne_id:
+            abonne = db.query(Abonne).filter(Abonne.id == compteur_data.abonne_id).first()
+            if not abonne:
+                raise HTTPException(status_code=404, detail="Abonne non trouvé")
 
         for field, value in compteur_data.dict(exclude_unset=True).items():
             setattr(compteur, field, value)

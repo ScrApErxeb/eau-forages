@@ -1,10 +1,9 @@
-# app/routers/interventions.py
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.db import get_db
 from app.models.intervention import Intervention
-from app.schemas.intervention import InterventionCreate, InterventionOut
+from app.schemas.intervention import InterventionCreate, InterventionUpdate, InterventionOut
 from app.utils.db_utils import get_or_404
 from app.utils.pagination import paginate
 
@@ -27,7 +26,7 @@ def get_intervention(intervention_id: int, db: Session = Depends(get_db)):
     return get_or_404(db, Intervention, intervention_id, "Intervention non trouvée")
 
 @router.put("/{intervention_id}", response_model=InterventionOut)
-def update_intervention(intervention_id: int, data: InterventionCreate, db: Session = Depends(get_db)):
+def update_intervention(intervention_id: int, data: InterventionUpdate, db: Session = Depends(get_db)):
     intervention = get_or_404(db, Intervention, intervention_id, "Intervention non trouvée")
     for field, value in data.dict(exclude_unset=True).items():
         setattr(intervention, field, value)
